@@ -1,1 +1,7 @@
-# score-board
+# Score board
+
+## Dependencies
+TBD...
+
+## Considerations
+TBD...
