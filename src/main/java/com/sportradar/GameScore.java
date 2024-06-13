@@ -1,33 +1,29 @@
 package com.sportradar;
 
-import java.time.ZonedDateTime;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-/**
- *  Object that responsible for operations on the game and its score
- */
+@Getter
+@EqualsAndHashCode
 public class GameScore {
-    private final ZonedDateTime startDate;
+    private final int index;
     private final String homeTeamName;
     private final String awayTeamName;
-    private byte homeTeamScore;
-    private byte awayTeamScore;
+    private int homeTeamScore;
+    private int awayTeamScore;
 
-    public GameScore(String homeTeamName, String awayTeamName) {
-        this.startDate = ZonedDateTime.now();
+    public GameScore(String homeTeamName, String awayTeamName, int index) {
+        this.index = index;
         this.homeTeamName = homeTeamName;
         this.awayTeamName = awayTeamName;
     }
 
-    public void updateScore(byte homeTeamScore, int awayTeamScore) {
-        // TODO: David: Implement
+    public void updateScore(int homeTeamScore, int awayTeamScore) {
+        this.homeTeamScore = homeTeamScore;
+        this.awayTeamScore = awayTeamScore;
     }
 
     public int getTotalScore() {
         return homeTeamScore + awayTeamScore;
-    }
-
-    @Override
-    public String toString() {
-        return homeTeamName + " " + homeTeamScore + " - " + awayTeamName + " " + awayTeamScore;
     }
 }
