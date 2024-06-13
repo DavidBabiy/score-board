@@ -11,9 +11,11 @@ public class GameScore {
     private final String awayTeamName;
     private int homeTeamScore;
     private int awayTeamScore;
-    /*
+    /**
         This field should be ZonedDateTime for example, but it is complicated to mock static method ZonedDateTime.now(),
-        so I simplified it and used like index
+        so I simplified and used it like index
+
+        @see  com.sportradar.persistance.InMemoryGameScorePersistenceService#save(GameScore)
      */
     @Setter
     private int createdDate;

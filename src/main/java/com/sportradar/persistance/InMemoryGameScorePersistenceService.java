@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class InMemoryGameScorePersistenceService implements GameScorePersistenceService {
-
     private final Set<GameScore> gameScores = new TreeSet<>(
             Comparator.comparingInt(GameScore::getTotalScore)
                     .thenComparingInt(GameScore::getCreatedDate)
@@ -16,7 +15,7 @@ public class InMemoryGameScorePersistenceService implements GameScorePersistence
 
     @Override
     public void save(GameScore gameScore) {
-        gameScore.setCreatedDate(gameScores.size()); // For sake of simplified testing
+        gameScore.setCreatedDate(gameScores.size()); // For sake of simplified testing, instead of date, index is set to keep track which record was recently added
         gameScores.add(gameScore);
     }
 

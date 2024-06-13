@@ -39,11 +39,14 @@ But I used primitive `int` for the sake of convenience. Although, if this progra
 
 #### b. Games "database"
 `getGamesSummary` should return sorted element collection, so we need to decide how to store that data:
-- (✓) `TreeSet` - brings us `O(log(n))` complexity on READ, and instead we receive out of the box sorting. For READ, we need the whole tree, so it is linear complexity.
-- (?) `ArrayList` - list is a great option for writing data by `O(1)`. And probably better would be to sort it on demand (on READ).
+- (✓) `TreeSet` - brings us `O(log(n))` complexity on WRITE with sorting out of the box. For READ, we need the whole tree, so it is linear complexity.
+- (?) `ArrayList` - list is a great option for writing data by `O(1)`. And probably better would be to sort it on demand, what brings complexity on READ.
 
 In order to choose, we need to know what will be used frequently READ or WRITE. I am not acknowledged about it, 
 so I chose `TreeSet`, because it seemed to be more balanced.
 
 ### 4. Concurrency
-First, I considered to make app concurrency-safe for WRITE, but as for me, football score tracking is something consequent and I couldn't imagine case where multithreading is useful here.
+First, I considered to make app concurrency-safe, but as for me, football score tracking is something consequent and I couldn't imagine case where multithreading is useful here.
+
+### 5. Java Docs
+Tried to create self-explanatory code, so the JavaDocs are redundant, in my opinion.
