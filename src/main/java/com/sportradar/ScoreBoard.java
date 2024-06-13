@@ -1,5 +1,7 @@
 package com.sportradar;
 
+import com.sportradar.model.GameScoreDto;
+
 import java.util.List;
 
 public interface ScoreBoard {

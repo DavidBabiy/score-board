@@ -2,6 +2,9 @@ package com.sportradar;
 
 import com.sportradar.exception.InvalidOperationException;
 import com.sportradar.exception.InvalidArgumentsException;
+import com.sportradar.model.GameScoreDto;
+import com.sportradar.persistance.GameScorePersistenceService;
+import com.sportradar.persistance.InMemoryGameScorePersistenceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,10 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreBoardAppTest {
     private ScoreBoard scoreBoard;
+    private GameScorePersistenceService persistenceService;
 
     @BeforeEach
     public void setUp() {
-        scoreBoard = new FootballScoreBoard();
+        persistenceService = new InMemoryGameScorePersistenceService();
+        scoreBoard = new FootballScoreBoard(persistenceService);
     }
 
     @Test

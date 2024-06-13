@@ -1,17 +1,20 @@
 package com.sportradar;
 
+import com.sportradar.entity.GameScore;
 import com.sportradar.exception.InvalidArgumentsException;
 import com.sportradar.exception.InvalidOperationException;
+import com.sportradar.model.GameScoreDto;
+import com.sportradar.persistance.GameScorePersistenceService;
 
 import java.util.*;
 
 public class FootballScoreBoard implements ScoreBoard {
-    private final Set<GameScore> gameScores = new TreeSet<>(
-            Comparator.comparingInt(GameScore::getTotalScore)
-                    .thenComparingInt(GameScore::getIndex)
-                    .reversed()
-    );
+    private final GameScorePersistenceService gameScorePersistenceService;
     private GameScore onGoingGameScore;
+
+    public FootballScoreBoard(GameScorePersistenceService gameScorePersistenceService) {
+        this.gameScorePersistenceService = gameScorePersistenceService;
+    }
 
     @Override
     public void startGame(String homeTeamName, String awayTeamName) {
@@ -22,7 +25,7 @@ public class FootballScoreBoard implements ScoreBoard {
                 || Objects.isNull(awayTeamName) || awayTeamName.isEmpty()) {
             throw new InvalidArgumentsException("Team name is required");
         }
-        onGoingGameScore = new GameScore(homeTeamName, awayTeamName, gameScores.size());
+        onGoingGameScore = new GameScore(homeTeamName, awayTeamName);
     }
 
     @Override
@@ -30,7 +33,7 @@ public class FootballScoreBoard implements ScoreBoard {
         if (Objects.isNull(onGoingGameScore)) {
             throw new InvalidOperationException("Game was not found");
         }
-        gameScores.add(onGoingGameScore);
+        gameScorePersistenceService.save(onGoingGameScore);
         onGoingGameScore = null;
     }
 
@@ -47,7 +50,7 @@ public class FootballScoreBoard implements ScoreBoard {
 
     @Override
     public List<GameScoreDto> getGamesSummary() {
-        return gameScores.stream()
+        return gameScorePersistenceService.findAllOrderedByTotalScoreAndAddedDateDesc().stream()
                 .map(GameScoreDto::of)
                 .toList();
     }
